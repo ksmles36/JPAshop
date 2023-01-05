@@ -8,6 +8,7 @@ spring:
         username: jpashop
         password: jpashop
         driver-class-name: oracle.jdbc.driver.OracleDriver
-
-
-
+    jpa:
+        hibernate:
+            ddl-auto: none
+        show-sql: false
