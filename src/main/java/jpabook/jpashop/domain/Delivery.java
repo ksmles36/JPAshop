@@ -7,11 +7,12 @@ import org.apache.tomcat.jni.Address;
 import javax.persistence.*;
 
 @Entity
+@SequenceGenerator(name = "seq_delivery_id", sequenceName = "seq_delivery_id", initialValue = 1, allocationSize = 1)
 @Getter
 @Setter
 public class Delivery {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "delivery_id")
     private Long id;
 

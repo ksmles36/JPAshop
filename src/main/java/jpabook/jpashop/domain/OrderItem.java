@@ -12,11 +12,13 @@ import javax.persistence.*;
 import static javax.persistence.FetchType.LAZY;
 
 @Entity
+@SequenceGenerator(name = "seq_order_item_id", sequenceName = "seq_order_item_id", initialValue = 1, allocationSize = 1)
 @Getter @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderItem {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "order_item_id")
     private Long id;
 

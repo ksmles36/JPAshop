@@ -10,13 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@SequenceGenerator(name = "seq_item_id", sequenceName = "seq_item_id", initialValue = 1, allocationSize = 1)
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "dtype")
 @Getter @Setter
 public abstract class Item {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "item_id")
     private Long id;
 

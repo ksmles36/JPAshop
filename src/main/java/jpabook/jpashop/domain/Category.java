@@ -9,11 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@SequenceGenerator(name = "seq_category_id", sequenceName = "seq_category_id", initialValue = 1, allocationSize = 1)
 @Getter
 @Setter
 public class Category {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "category_id")
     private Long id;
 
