@@ -37,7 +37,7 @@ public class OrderApiController {
     }
 
     @GetMapping("/api/v2/orders")
-    public List<OrderDto> ordersV2(){
+    public List<OrderDto> ordersV2() {
         List<Order> orders = orderRepository.findAllByString(new OrderSearch());
         List<OrderDto> result = orders.stream()
                 .map(o -> new OrderDto(o))
@@ -45,8 +45,18 @@ public class OrderApiController {
         return result;
     }
 
+    @GetMapping("/api/v3/orders")
+    public List<OrderDto> ordersV3() {
+        List<Order> orders = orderRepository.findAllByItem();
+        List<OrderDto> result = orders.stream()
+                .map(o -> new OrderDto(o))
+                .collect(Collectors.toList());
+        return result;
+    }
+
+
     @Getter
-    static class OrderDto{
+    static class OrderDto {
         private Long orderId;
         private String name;
         private LocalDateTime orderDate;
@@ -72,7 +82,7 @@ public class OrderApiController {
     }
 
     @Getter
-    static class OrderItemDto{
+    static class OrderItemDto {
         private String itemName;
         private int orderPrice;
         private int count;
@@ -83,7 +93,6 @@ public class OrderApiController {
             this.count = orderItem.getCount();
         }
     }
-
 
 
 }
