@@ -39,10 +39,10 @@ public class OrderApiController {
     @GetMapping("/api/v2/orders")
     public List<OrderDto> ordersV2(){
         List<Order> orders = orderRepository.findAllByString(new OrderSearch());
-        List<OrderDto> collect = orders.stream()
+        List<OrderDto> result = orders.stream()
                 .map(o -> new OrderDto(o))
                 .collect(Collectors.toList());
-        return collect;
+        return result;
     }
 
     @Getter
@@ -52,7 +52,8 @@ public class OrderApiController {
         private LocalDateTime orderDate;
         private OrderStatus orderStatus;
         private Address address;
-        private List<OrderItem> orderItems;
+        //        private List<OrderItem> orderItems;
+        private List<OrderItemDto> orderItems;
 
         public OrderDto(Order order) {
             this.orderId = order.getId();
@@ -61,10 +62,10 @@ public class OrderApiController {
             this.orderStatus = order.getStatus();
             this.address = order.getDelivery().getAddress();
 
-            //order.getOrderItems().stream().forEach(o -> o.getItem().getName());   //디버깅 찍어서 어떻게 돌아가나 확인해보기 (프록시 초기화 라고 하네 영한님은)
+            //order.getOrderItems().stream().forEach(o -> o.getItem().getName());
             //this.orderItems = order.getOrderItems();
 
-            orderItems = order.getOrderItems().stream()
+            this.orderItems = order.getOrderItems().stream()
                     .map(orderItem -> new OrderItemDto(orderItem))
                     .collect(Collectors.toList());
         }
@@ -72,7 +73,15 @@ public class OrderApiController {
 
     @Getter
     static class OrderItemDto{
+        private String itemName;
+        private int orderPrice;
+        private int count;
 
+        public OrderItemDto(OrderItem orderItem) {
+            this.itemName = orderItem.getItem().getName();
+            this.orderPrice = orderItem.getOrderPrice();
+            this.count = orderItem.getCount();
+        }
     }
 
 
